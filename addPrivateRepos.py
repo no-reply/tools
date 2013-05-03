@@ -1,13 +1,14 @@
-"""Usage: addPrivateRepos.py <name> ...
-          addPrivateRepos.py (-u <username> -p <password> -t <team-id> -o <owners-team-id> -O <org>) <name> ...
+"""
+Usage: addPrivateRepos.py <name> ...
+       addPrivateRepos.py (-u <username> -p <password> -t <team-id> -o <owners-team-id> -O <org>) <name> ...   
 
 Options:
   -h --help
-  -u --username         GitHub API username
-  -p --password         API password
-  -t --team-id          Team Id
-  -o --owners-team-id   Owners Team Id
-  -O --org              GitHub Organization
+  -u <username>,       --username=<username>               GitHub API username
+  -p <password>,       --password=<password>               API password
+  -t <team-id>,        --team-id=<team-id>                 Team Id
+  -o <owners-team-id>, --owners-team-id=<owners-team-id>   Owners Team Id
+  -O <org>,            --org=<org>                         GitHub Organization
 """
 
 from pygithub3 import Github
@@ -30,18 +31,17 @@ if __name__ == '__main__':
     arguments = docopt(__doc__)
     # if username in args, use command line params
     # docopt will give usage if you try to pass a username and not the rest of the required params
-    if arguments['<username>']:
-        USERNAME = arguments['<username>']
-        PASSWORD = arguments['<password>']
-        TEAM_ID =  arguments['<team-id>']
-        OWNERS =   arguments['<owners-team-id>']
-        ORG =      arguments['<org>']
+    if arguments['-u']:
+        USERNAME = arguments['-u']
+        PASSWORD = arguments['-p']
+        TEAM_ID =  arguments['-t']
+        OWNERS =   arguments['--owners-team-id']
+        ORG =      arguments['-O']
     # otherwise, use secrets.py
     else:
         from secrets import *
     # use names from command line no matter what
     usernames = arguments['<name>']
-    print usernames
 
 gh = Github(login=USERNAME, password=PASSWORD)
 org = ORG
